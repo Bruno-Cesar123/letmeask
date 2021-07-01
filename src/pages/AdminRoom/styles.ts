@@ -156,13 +156,3 @@ export const Container = styled.div`
   }
 `;
 
-export const StyledModal = styled.div`
-  width: 20rem;
-  height: 20rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #f8f8f8;
-  color: ${(props) => props.theme.colors.text};
-`;

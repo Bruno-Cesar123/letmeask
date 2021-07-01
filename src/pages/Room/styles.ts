@@ -1,7 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
-export const Container =  styled.div`
+export const Container = styled.div`
   header {
     padding: 24px;
     border-bottom: 1px solid #e2e2e2;
@@ -25,6 +24,23 @@ export const Container =  styled.div`
           height: 40px;
         }
       }
+
+      .section-content {
+        display: flex;
+        align-items: center;
+
+        .button-singout {
+          border: 0;
+          background: transparent;
+          cursor: pointer;
+
+          svg {
+            color: ${(props) => props.theme.colors.text};
+            width: 24px;
+            height: 24px;
+          }       
+        }
+      }
     }
   }
 
@@ -38,9 +54,9 @@ export const Container =  styled.div`
       align-items: center;
 
       h1 {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
         font-size: 24px;
-        color: ${props => props.theme.colors.text};
+        color: ${(props) => props.theme.colors.text};
       }
 
       span {
@@ -61,8 +77,8 @@ export const Container =  styled.div`
         border: 0;
         padding: 16px;
         border-radius: 8px;
-        background: ${props => props.theme.colors.input};
-        color: ${props => props.theme.colors.text};
+        background: ${(props) => props.theme.colors.input};
+        color: ${(props) => props.theme.colors.text};
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         resize: vertical;
         min-height: 130px;
@@ -86,7 +102,7 @@ export const Container =  styled.div`
 
           > span {
             margin-left: 8px;
-            color: ${props => props.theme.colors.text};
+            color: ${(props) => props.theme.colors.text};
             font-weight: 500;
             font-size: 14px;
           }
@@ -106,7 +122,6 @@ export const Container =  styled.div`
             font-weight: 500;
             cursor: pointer;
           }
-
         }
       }
     }
@@ -116,7 +131,7 @@ export const Container =  styled.div`
     margin-top: 32px;
   }
 
-  @media(max-width: 900px) {
+  @media (max-width: 900px) {
     main {
       h1 {
         padding: 16px;
@@ -131,7 +146,7 @@ export const Container =  styled.div`
     }
   }
 
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     header {
       .content {
         display: flex;
@@ -148,10 +163,9 @@ export const Container =  styled.div`
         padding: 10px 16px;
         display: grid;
         grid-template-columns: 2fr 1fr;
-        
+
         span {
           width: 120px;
-          
         }
       }
     }

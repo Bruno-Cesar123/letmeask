@@ -11,7 +11,7 @@ import answerImg from '../../assets/images/answer.svg';
 import { Button } from '../../components/Button';
 import { RoomCode } from '../../components/RoomCode';
 import { Question } from '../../components/Question';
-// import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 
 import { useRoom } from '../../hooks/useRoom';
 import { database } from '../../services/Firebase';
@@ -28,13 +28,11 @@ Modal.setAppElement("#root");
 
 
 export function AdminRoom() {
-  // const { user } = useAuth();
+  const { signOut } = useAuth();
   const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const [modal, setModal] = useState(false);
-
-
   const { questions, title } = useRoom(roomId);
 
   async function handleEndRoom() {
@@ -42,8 +40,9 @@ export function AdminRoom() {
 
       await database.ref(`rooms/${roomId}`).update({
         endedAt: new Date(),
-      })
+      });
 
+      signOut();
       history.push('/');
       toast.success('Sala encerrada com sucesso');
     } catch (err) {

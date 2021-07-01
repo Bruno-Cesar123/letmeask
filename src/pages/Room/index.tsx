@@ -1,13 +1,17 @@
 import { useState, FormEvent } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { FiPower } from 'react-icons/fi';
+
 import logoImg from '../../assets/images/logo.svg';
+
 import { Button } from '../../components/Button';
 import { RoomCode } from '../../components/RoomCode';
 import { Question } from '../../components/Question';
 import { useAuth } from '../../hooks/useAuth';
 import { database } from '../../services/Firebase';
-
 import { useRoom } from '../../hooks/useRoom';
+
 import { Container } from './styles';
 
 
@@ -16,12 +20,37 @@ type RoomParams = {
 }
 
 export function Room() {
-  const { user } = useAuth();
+  const history = useHistory();
+  const { user, singInWithGoogle, signOut } = useAuth();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const [newQuestion, setNewQuestion] = useState('');
 
   const { questions, title } = useRoom(roomId);
+
+  async function handleLogin() {
+    try {
+      if (!user) {
+        await singInWithGoogle()
+      }
+  
+      toast.success('Logon realizado com sucesso');
+    } catch (err) {
+      toast.error('Ocorreu um erro ao realizar o logon');
+    }
+  }
+
+  async function handleLogout() {
+    try {
+      signOut();
+      history.push('/');
+
+      toast.success('Logout efetuado com sucesso');
+    } catch (err) {
+      toast.error('Ocorreu um erro ao realizar o logout');
+    }
+
+  }
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -65,7 +94,12 @@ export function Room() {
       <header>
         <div className="content">
           <img src={logoImg} alt="Letmeask" />
-          <RoomCode code={roomId} />
+          <div className="section-content">
+            <RoomCode code={roomId} />
+            <button onClick={handleLogout} className="button-singout">
+              <FiPower />
+            </button>
+          </div>
         </div>
       </header>
 
@@ -90,7 +124,7 @@ export function Room() {
               </div>
             ) : (
               <span>Para enviar uma pergunta,
-                <button>Faça seu login</button>
+                <button onClick={handleLogin}>Faça seu login</button>
               </span>
             )}
             <Button type="submit" disabled={!user}>Enviar pergunta</Button>
